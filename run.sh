@@ -7,4 +7,4 @@ fi
 
 pip install -r requirements.txt --user
 
-ansible-playbook setup.yml -i HOSTS --module-path ./ansible_modules --extra-vars "@config.yml"
+ansible-playbook setup.yml -i HOSTS --module-path ./ansible_modules --ask-become-pass --extra-vars "@config.yml"

@@ -1,0 +1,27 @@
+# Bash-it
+- name: download bash_it
+  git:
+    repo: 'https://github.com/Bash-it/bash-it/'
+    dest: "{{ ansible_env.HOME }}/.bash_it"
+    force: yes
+- name: hack bash_it to a different rc file
+  lineinfile:
+    dest: "{{ ansible_env.HOME }}/.bash_it/install.sh"
+    regexp: "CONFIG_FILE=.bashrc"
+    line: "CONFIG_FILE=.bash_it_rc"
+- name: install bash_it
+  command: "{{ ansible_env.HOME }}/.bash_it/install.sh -s"
+- name: source bash_it
+  lineinfile:
+    dest: "{{ ansible_env.HOME }}/.bashrc"
+    line: "source $HOME/.bash_it_rc"
+
+# direnv
+- name: setup direnv
+  command: apt install direnv
+  become: yes
+
+- name: source direnv
+  lineinfile:
+    dest: "{{ ansible_env.HOME }}/.bashrc"
+    line: 'eval "$(direnv hook bash)"'
