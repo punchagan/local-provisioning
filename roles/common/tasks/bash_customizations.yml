@@ -3,6 +3,7 @@
   git:
     repo: 'https://github.com/Bash-it/bash-it/'
     dest: "{{ ansible_env.HOME }}/.bash_it"
+    depth: 1
     force: yes
 - name: hack bash_it to a different rc file
   lineinfile:

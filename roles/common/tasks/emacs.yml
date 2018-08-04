@@ -3,6 +3,7 @@
   git:
     repo: 'git://git.savannah.gnu.org/emacs.git'
     dest: "{{ ansible_env.HOME }}/software/others/emacs"
+    depth: 1
   register: emacs_git
 - name: Emacs autogen.sh
   when: emacs_git.changed
@@ -30,6 +31,7 @@
   git:
     repo: 'https://github.com/syl20bnr/spacemacs.git'
     dest: "{{ ansible_env.HOME }}/.emacs.d"
+    depth: 1
 
 # .spacemacs
 - name: Spacemacs clone
