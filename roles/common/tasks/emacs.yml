@@ -5,6 +5,17 @@
     dest: "{{ ansible_env.HOME }}/software/others/emacs"
     depth: 1
   register: emacs_git
+- name: setup src repository
+  become: yes
+  apt_repository:
+    repo: deb-src http://archive.ubuntu.com/ubuntu/ bionic main multiverse universe restricted
+    state: present
+- name: install build requirements
+  become: yes
+  command: apt build-dep -y emacs
+- name: install build essentials
+  become: yes
+  command: apt install -y build-essential texinfo libgtk-3-dev libxpm-dev libjpeg-dev libgif-dev libtiff-dev libncurses5-dev
 - name: Emacs autogen.sh
   when: emacs_git.changed
   command: "./autogen.sh"
@@ -36,7 +47,7 @@
 # .spacemacs
 - name: Spacemacs clone
   git:
-    repo: 'git@github.com:{{ github }}/.spacemacs.d.git'
+    repo: 'https://github.com/{{ github }}/.spacemacs.d.git'
     dest: "{{ ansible_env.HOME }}/.spacemacs.d"
 
 
