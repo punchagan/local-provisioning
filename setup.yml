@@ -1,0 +1,5 @@
+- name: a playbook to setup my local dev machine
+  hosts: local
+  connection: local
+  roles:
+    - common
