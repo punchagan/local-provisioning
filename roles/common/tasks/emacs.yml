@@ -1,3 +1,30 @@
+# Emacs
+- name: Download Emacs
+  git:
+    repo: 'git://git.savannah.gnu.org/emacs.git'
+    dest: "{{ ansible_env.HOME }}/software/others/emacs"
+  register: emacs_git
+- name: Emacs autogen.sh
+  when: emacs_git.changed
+  command: "./autogen.sh"
+  args:
+    chdir: "{{ ansible_env.HOME }}/software/others/emacs/"
+- name: Emacs configure
+  when: emacs_git.changed
+  command: "./configure"
+  args:
+    chdir: "{{ ansible_env.HOME }}/software/others/emacs/"
+- name: Emacs make
+  when: emacs_git.changed
+  make:
+    chdir: "{{ ansible_env.HOME }}/software/others/emacs/"
+- name: Emacs install
+  when: emacs_git.changed
+  become: yes
+  make:
+    chdir: "{{ ansible_env.HOME }}/software/others/emacs/"
+    target: install
+
 # xclip for copying images from clipboard
 - name: install xclip
   command: apt install xclip
