@@ -40,5 +40,7 @@
 
 # xclip for copying images from clipboard
 - name: install xclip
-  command: apt install xclip
   become: yes
+  apt:
+    name: xclip
+    update_cache: yes
