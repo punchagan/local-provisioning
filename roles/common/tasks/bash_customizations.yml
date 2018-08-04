@@ -25,3 +25,16 @@
   lineinfile:
     dest: "{{ ansible_env.HOME }}/.bashrc"
     line: 'eval "$(direnv hook bash)"'
+
+# Setup ~/bin/
+- name: create ~/bin dir with scripts
+  copy:
+    src: "{{ item }}"
+    dest: "{{ ansible_env.HOME }}"
+  with_items:
+    - bin
+
+- name: setup ~/bin in $PATH
+  lineinfile:
+    dest: "{{ ansible_env.HOME }}/.bashrc"
+    line: "export PATH=$HOME/bin:$PATH"

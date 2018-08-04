@@ -1,0 +1,2 @@
+#!/bin/bash
+emacsclient -n --eval "(browse-url-mail \"$@\")"
