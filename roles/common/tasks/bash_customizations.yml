@@ -22,7 +22,6 @@
   become: yes
   apt:
     name: direnv
-    update_cache: yes
 
 - name: source direnv
   lineinfile:

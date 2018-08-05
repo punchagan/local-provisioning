@@ -56,4 +56,3 @@
   become: yes
   apt:
     name: xclip
-    update_cache: yes
