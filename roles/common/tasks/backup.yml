@@ -1,0 +1,11 @@
+# Restic
+- name: install restic
+  become: yes
+  command: apt install restic
+
+# Copy the back-up script
+- name: copy the backup script
+  copy:
+    src: restic-backup.sh
+    dest: "{{ ansible_env.HOME }}/software/my-repos/backup-utils/"
+    mode: preserve
