@@ -5,7 +5,14 @@
 
 # Copy the back-up script
 - name: copy the backup script
+  register: copy_result
   copy:
     src: restic-backup.sh
     dest: "{{ ansible_env.HOME }}/software/my-repos/backup-utils/"
     mode: preserve
+    backup: yes
+
+- debug:
+    msg: "{{ copy_result.dest }} backed up to {{ copy_result.backup_file }}!!!"
+    verbosity: 0
+  when: '"backup_file" in copy_result'

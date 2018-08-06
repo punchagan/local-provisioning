@@ -32,9 +32,21 @@
 - name: create ~/bin dir with scripts
   copy:
     src: "{{ item }}"
-    dest: "{{ ansible_env.HOME }}"
+    dest: "{{ ansible_env.HOME }}/bin"
+    mode: preserve
+    backup: yes
   with_items:
-    - bin
+    - emacsmail
+    - journal.sh
+    - screenshot2file
+  register: copy_result
+
+# Notify about changed files
+- debug:
+    msg: "{{ item.dest }} backed up to {{ item.backup_file }}!!!"
+    verbosity: 0
+  when: '"backup_file" in item'
+  loop: "{{ copy_result.results }}"
 
 - name: setup ~/bin in $PATH
   lineinfile:
