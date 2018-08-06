@@ -1,3 +1,4 @@
 - include: bash_customizations.yml
 - include: emacs.yml
 - include: backup.yml
+- include: email.yml

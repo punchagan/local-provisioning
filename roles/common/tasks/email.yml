@@ -1,0 +1,45 @@
+# msmtp
+- name: install msmtp
+  become: yes
+  command: apt install msmtp
+
+- name: install secret-tool
+  become: yes
+  command: apt install libsecret-tools
+
+# Copy the
+- name: copy the msmtp utils
+  copy:
+    src: "{{ item }}"
+    dest: "{{ ansible_env.HOME }}/bin"
+    mode: preserve
+    backup: yes
+  register: copy_result
+  loop:
+    - "msmtp.py"
+    - "msmtp-queue.py"
+
+- debug:
+    msg: "{{ item.dest }} backed up to {{ item.backup_file }}!!!"
+    verbosity: 0
+  when: '"backup_file" in item'
+  loop: "{{ copy_result.results }}"
+
+
+# Copy the
+- name: copy the msmtprc file
+  copy:
+    src: "msmtp-config"
+    dest: "{{ ansible_env.HOME }}/.config/msmtp/config"
+    mode: preserve
+    backup: yes
+  register: copy_result
+- debug:
+    msg: "{{ copy_result.dest }} backed up to {{ copy_result.backup_file }}!!!"
+    verbosity: 0
+  when: '"backup_file" in copy_result'
+- name: create soft link
+  file:
+    src: "{{ copy_result.dest }}"
+    dest: "{{ ansible_env.HOME }}/.msmtprc"
+    state: link
