@@ -8,4 +8,7 @@ restic -r gs:punchagan-backups:/ backup --tag software --tag ultimate --tag tiks
 restic -r gs:punchagan-backups:/ backup --tag software ~/software/my-repos/
 
 # Notes
-restic -r gs:punchagan-backups:/ backup --tag life-in-plain-text  ~/.life-in-plain-text/
+restic -r gs:punchagan-backups:/ backup --tag personal --tag life-in-plain-text  ~/.life-in-plain-text/
+
+# Music
+restic -r gs:punchagan-backups:/ backup --tag personal --tag music  -e re.ax.lt/* ~/Music
